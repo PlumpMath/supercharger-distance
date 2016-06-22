@@ -32,7 +32,8 @@ for s in superchargers_markup:
         print 'Could not find coordinates for {}'.format(full_address)
 
 address_pairs = product(addresses, addresses)
-distances = map(lambda p: distance(p[0], p[1]).miles, address_pairs)
+distances = filter(lambda d: d > 0.0, map(lambda p: distance(p[0], p[1]).miles,
+                                          address_pairs))
 
 print 'Minimum distance between any two Superchargers is {} miles'.format(
     min(distances))
