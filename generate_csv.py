@@ -8,6 +8,7 @@ import time
 from geopy.geocoders import GoogleV3
 from geopy.distance import distance
 from itertools import product
+import re
 
 def _str(s):
     if s is None:
@@ -36,7 +37,8 @@ for s in superchargers_markup:
     full_address = ', '.join([address, locality])
     location = geocoder.geocode(full_address)
     time.sleep(0.1)  # so we don't overrun the per-second limit of the Google API.
-    location_map = {'address': address, 'locality': locality}
+    location_map = {'address': re.escape(address),
+                    'locality': re.escape(locality)}
     try:
         location_map['lat'] = str(location.latitude)
         location_map['long'] = str(location.longitude)
